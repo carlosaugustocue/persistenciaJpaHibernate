@@ -349,9 +349,22 @@ public class Main {
         }
     }
 
-    // Listar todos los empleados
+    // Método para listar todos los empleados
     private static void listarEmpleados() {
         System.out.println("\n--- Lista de Empleados ---");
-        // Implementar lógica para listar todos los empleados (si es necesario)
+
+        List<Empleado> empleados = empleadoRepo.listarTodos();  // Llamamos al método del repositorio
+
+        if (empleados.isEmpty()) {
+            System.out.println("No hay empleados registrados.");
+        } else {
+            for (Empleado empleado : empleados) {
+                System.out.println("ID: " + empleado.getId());
+                System.out.println("Nombre: " + empleado.getNombre());
+                System.out.println("Fecha de Contratación: " + empleado.getFechaContratacion());
+                System.out.println("Estado: " + empleado.getEstado());
+                System.out.println("-----------------------");
+            }
+        }
     }
 }

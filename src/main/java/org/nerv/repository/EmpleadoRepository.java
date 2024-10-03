@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.nerv.domain.model.Empleado;
 
+import java.util.List;
+
 public class EmpleadoRepository {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_PU");
 
@@ -46,6 +48,16 @@ public class EmpleadoRepository {
             em.getTransaction().begin();
             em.remove(em.contains(empleado) ? empleado : em.merge(empleado));
             em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    // Método para listar todos los empleados
+    public List<Empleado> listarTodos() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT e FROM Empleado e", Empleado.class).getResultList();
         } finally {
             em.close();
         }
